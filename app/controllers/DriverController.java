@@ -45,6 +45,9 @@ public class DriverController extends Controller {
 	public Result save(Long driverId) throws Exception {
 		Form<forms.DBDriver> driverForm = Form.form(forms.DBDriver.class)
 				.bindFromRequest();
+		if (driverForm.hasErrors()) {
+			return badRequest(edit.render(driverId, driverForm));
+		}
 		forms.DBDriver driver = driverForm.get();
 		MultipartFormData body = request().body().asMultipartFormData();
 		FilePart jarFilePart = body.getFile("jarFile");
