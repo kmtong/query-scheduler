@@ -50,6 +50,9 @@ public class ConnectionController extends Controller {
 	public Result save(Long connId) throws Exception {
 		Form<forms.DBConnection> connForm = Form.form(forms.DBConnection.class)
 				.bindFromRequest();
+		if (connForm.hasErrors()) {
+			return badRequest(edit.render(connId, connForm, getDriverOptions()));
+		}
 		forms.DBConnection conn = connForm.get();
 		DBConnection dbconn = null;
 		if (connId != null && connId != 0) {

@@ -1,0 +1,25 @@
+@(queryjobs: List[models.QueryJob])
+
+@main(Messages("queryjobList")) {
+
+	<table class="table table-striped">
+		<tr>
+			<th>@Messages("queryjobConnection")</th>
+			<th>@Messages("queryjobName")</th>
+			<th>@Messages("queryjobCron")</th>
+			<th>@Messages("queryjobRecipients")</th>
+			<th>@Messages("action")</th>
+		</tr>
+	@for(queryjob <- queryjobs) {
+		<tr>
+			<td><a href="@routes.QueryJobController.load(queryjob.getId())">@queryjob.getConnection().getName()</a></td>
+			<td>@queryjob.getName()</td>
+			<td>@queryjob.getCron()</td>
+			<td>@queryjob.getRecipients()</td>
+			<td><a href="@routes.QueryJobController.test(queryjob.getId())">@Messages("queryjobTest")</a>
+		</tr>
+	}
+	</table>
+	
+	<a class="btn btn-default" href="@routes.QueryJobController.load(0)">@Messages("queryjobCreate")</a>
+}

@@ -17,3 +17,14 @@ connectionUsername=Username
 connectionPassword=Password
 connectionCreate=Create Connection
 connectionTest=Test Connection
+
+queryjobList=Query Job List
+queryjobDetail=Query Job Detail
+queryjobName=Job Name
+queryjobConnection=Connection
+queryjobCron=Cron Schedule
+queryjobQuery=SQL Query
+queryjobRecipients=Recipients
+queryjobOutputFormat=Output Format
+queryjobCreate=Create Query Job
+queryjobTest=Test Run

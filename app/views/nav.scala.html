@@ -17,7 +17,7 @@
     <div class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
 		  <li @urlstarts("/home")><a href="#">Home</a></li>
-		  <li @urlstarts("/jobs")><a href="#">Query Jobs</a></li>
+		  <li @urlstarts("/queryjob")><a href="@routes.QueryJobController.index()">Query Jobs</a></li>
 		  <li @urlstarts("/connection")><a href="@routes.ConnectionController.index()">Connections</a></li>
 		  <li @urlstarts("/driver")><a href="@routes.DriverController.index()">@Messages("drivers")</a></li>
 		</ul>

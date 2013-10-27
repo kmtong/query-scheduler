@@ -14,7 +14,7 @@ public class QueryJob {
 	String name;
 
 	String cron;
-	String receipients;
+	String recipients;
 
 	@ManyToOne
 	DBConnection connection;
@@ -47,12 +47,12 @@ public class QueryJob {
 		this.cron = cron;
 	}
 
-	public String getReceipients() {
-		return receipients;
+	public String getRecipients() {
+		return recipients;
 	}
 
-	public void setReceipients(String receipients) {
-		this.receipients = receipients;
+	public void setRecipients(String recipients) {
+		this.recipients = recipients;
 	}
 
 	public DBConnection getConnection() {

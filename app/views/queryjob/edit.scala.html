@@ -1,0 +1,23 @@
+@(id: Long,
+queryjobForm: Form[forms.QueryJob],
+connections: Map[String, String]
+)
+
+@import helper._
+@import helper.twitterBootstrap3._
+
+@main(Messages("queryjobDetail")) {
+
+	@form(action = routes.QueryJobController.save(id),
+		'class->"form-horizontal", 'role->"form") {
+	    @if(id != null){<input type="hidden" value="@id" />}
+	    @inputText(queryjobForm("name"), '_label -> Messages("queryjobName"))
+	    @select(queryjobForm("connectionId"), options=options(connections), '_label -> Messages("queryjobConnection"))
+	    @inputText(queryjobForm("cron"), '_label -> Messages("queryjobCron"))
+	    @textarea(queryjobForm("query"), '_label -> Messages("queryjobQuery"))
+	    @inputText(queryjobForm("recipients"), '_label -> Messages("queryjobRecipients"))
+	    @inputText(queryjobForm("outputFormat"), '_label -> Messages("queryjobOutputFormat"))
+	    <input type="submit" class="btn btn-primary btn-sm" value="@Messages("submit")" />
+	}
+
+}
