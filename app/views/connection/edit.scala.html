@@ -1,0 +1,22 @@
+@(id: Long,
+connForm: Form[forms.DBConnection],
+drivers: Map[String, String]
+)
+
+@import helper._
+@import helper.twitterBootstrap3._
+
+@main(Messages("connectionDetail")) {
+
+	@form(action = routes.ConnectionController.save(id),
+		'class->"form-horizontal", 'role->"form") {
+	    @if(id != null){<input type="hidden" value="@id" />}
+	    @inputText(connForm("name"), '_label -> Messages("connectionName"))
+	    @select(connForm("driverId"), options=options(drivers), '_label -> Messages("Driver"))
+	    @inputText(connForm("url"), '_label -> Messages("connectionUrl"))
+	    @inputText(connForm("username"), '_label -> Messages("connectionUsername"))
+	    @inputPassword(connForm("password"), '_label -> Messages("connectionPassword"))
+	    <input type="submit" class="btn btn-primary btn-sm" value="@Messages("submit")" />
+	}
+
+}

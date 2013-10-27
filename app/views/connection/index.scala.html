@@ -1,0 +1,21 @@
+@(connections: List[models.DBConnection])
+
+@main(Messages("connectionList")) {
+
+	<table class="table table-striped">
+		<tr>
+			<th>@Messages("connectionName")</th>
+			<th>@Messages("connectionUrl")</th>
+			<th>@Messages("action")</th>
+		</tr>
+	@for(conn <- connections) {
+		<tr>
+			<td><a href="@routes.ConnectionController.load(conn.getId())">@conn.getName()</a></td>
+			<td>@conn.getUrl()</td>
+			<td><a href="@routes.ConnectionController.test(conn.getId())">@Messages("connectionTest")</a>
+		</tr>
+	}
+	</table>
+	
+	<a class="btn btn-default" href="@routes.ConnectionController.load(0)">@Messages("connectionCreate")</a>
+}

@@ -1,0 +1,19 @@
+submit=Submit
+action=Action
+
+driverList=List of JDBC Drivers
+driverDetail=JDBC Driver Details
+drivers=Drivers
+driverName=Driver Name
+driverClass=Driver Class
+driverJarFile=Driver JAR File
+driverCreate=Create Driver
+
+connectionList=List of Connections
+connectionDetail=Connection Details
+connectionName=Connection Name
+connectionUrl=Connection URL
+connectionUsername=Username
+connectionPassword=Password
+connectionCreate=Create Connection
+connectionTest=Test Connection

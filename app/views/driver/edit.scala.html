@@ -1,0 +1,17 @@
+@(id: Long, driverForm: Form[forms.DBDriver])
+
+@import helper._
+@import helper.twitterBootstrap3._
+
+@main(Messages("driverDetail")) {
+
+	@form(action = routes.DriverController.save(id),
+		'class->"form-horizontal", 'role->"form",  'enctype->"multipart/form-data") {
+	    @if(id != null){<input type="hidden" value="@id" />}
+	    @inputText(driverForm("name"), '_label -> Messages("driverName"))
+	    @inputText(driverForm("driverClass"), '_label -> Messages("driverClass"))
+	    @inputFile(driverForm("jarFile"), '_label -> Messages("driverJarFile"))
+	    <input type="submit" class="btn btn-primary btn-sm" value="@Messages("submit")" />
+	}
+
+}

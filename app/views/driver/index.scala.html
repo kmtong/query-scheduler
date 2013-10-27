@@ -1,0 +1,19 @@
+@(drivers: List[models.DBDriver])
+
+@main(Messages("driverList")) {
+
+	<table class="table table-striped">
+		<tr>
+			<th>@Messages("driverName")</th>
+			<th>@Messages("driverClass")</th>
+		</tr>
+	@for(driver <- drivers) {
+		<tr>
+			<td><a href="@routes.DriverController.load(driver.getId())">@driver.getName()</a></td>
+			<td>@driver.getDriverClass()</td>
+		</tr>
+	}
+	</table>
+	
+	<a class="btn btn-default" href="@routes.DriverController.load(0)">@Messages("driverCreate")</a>
+}
