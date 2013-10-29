@@ -7,9 +7,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import play.Logger;
-
 import models.QueryJob;
+import play.Logger;
 
 import com.avaje.ebean.Ebean;
 
@@ -47,10 +46,11 @@ public class QueryJobService {
 	}
 
 	// XXX add batching support for multiple results
-	protected QueryResult executeQuery(QueryJob job) throws Exception {
+	public QueryResult executeQuery(QueryJob job) throws Exception {
 		Connection conn = connService.getConnection(job.getConnection());
 		Statement stmt = conn.createStatement();
 		ResultSet rs = stmt.executeQuery(job.getQuery());
 		return new QueryResult(conn, stmt, rs);
 	}
+
 }
