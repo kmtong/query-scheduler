@@ -14,6 +14,7 @@ public class QueryJob {
 	String name;
 
 	String cron;
+	String mailSubject;
 	String recipients;
 
 	@ManyToOne
@@ -45,6 +46,14 @@ public class QueryJob {
 
 	public void setCron(String cron) {
 		this.cron = cron;
+	}
+
+	public String getMailSubject() {
+		return mailSubject;
+	}
+
+	public void setMailSubject(String mailSubject) {
+		this.mailSubject = mailSubject;
 	}
 
 	public String getRecipients() {

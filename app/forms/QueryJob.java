@@ -14,6 +14,9 @@ public class QueryJob {
 	public String recipients;
 
 	@Required
+	public String mailSubject;
+	
+	@Required
 	public Long connectionId;
 
 	@Required

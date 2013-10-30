@@ -22,6 +22,7 @@ public class QueryJobFormAdapter implements Adapter<QueryJob, models.QueryJob> {
 		form.cron = entity.getCron();
 		form.query = entity.getQuery();
 		form.recipients = entity.getRecipients();
+		form.mailSubject = entity.getMailSubject();
 		form.outputFormat = entity.getOutputFormat();
 		return form;
 	}
@@ -39,6 +40,7 @@ public class QueryJobFormAdapter implements Adapter<QueryJob, models.QueryJob> {
 		entity.setOutputFormat(form.outputFormat);
 		entity.setQuery(form.query);
 		entity.setRecipients(form.recipients);
+		entity.setMailSubject(form.mailSubject);
 		entity.setConnection(findConnectionById(form.connectionId));
 		return entity;
 	}

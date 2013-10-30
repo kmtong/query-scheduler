@@ -25,6 +25,7 @@ queryjobConnection=Connection
 queryjobCron=Cron Schedule
 queryjobQuery=SQL Query
 queryjobRecipients=Recipients
+queryjobMailSubject=Subject
 queryjobOutputFormat=Output Format
 queryjobCreate=Create Query Job
 queryjobTest=Test Run

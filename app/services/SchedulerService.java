@@ -1,5 +1,6 @@
 package services;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,8 +15,8 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import play.Logger;
+import services.bean.MailOutputProcessor;
 import services.bean.QueryJobExecution;
-import services.bean.ResultTransformation;
 
 public class SchedulerService {
 
@@ -69,7 +70,7 @@ public class SchedulerService {
 			public void configure() throws Exception {
 				String id = getJobKey(job);
 				String fromUri = "quartz://QueryJob/" + job.getId() + "?cron="
-						+ URLEncoder.encode(job.getCron(), "UTF-8");
+						+ encode(job.getCron());
 
 				String mailProtocol = configProvider.getSmtpSSL() ? "smtps"
 						: "smtp";
@@ -81,20 +82,20 @@ public class SchedulerService {
 
 				if (configProvider.getSmtpUsername() != null) {
 					parameters.add("username="
-							+ URLEncoder.encode(
-									configProvider.getSmtpUsername(), "UTF-8"));
+							+ encode(configProvider.getSmtpUsername()));
 				}
 				if (configProvider.getSmtpPassword() != null) {
 					parameters.add("password="
-							+ URLEncoder.encode(
-									configProvider.getSmtpPassword(), "UTF-8"));
+							+ encode(configProvider.getSmtpPassword()));
 				}
-				
+
+				// mail subject
+				parameters.add("subject=" + encode(job.getMailSubject()));
+
 				// XXX comma-separated processing
 				// To recipients
-				parameters.add("to="
-						+ URLEncoder.encode(job.getRecipients(), "UTF-8"));
-				
+				parameters.add("to=" + encode(job.getRecipients()));
+
 				String params = StringUtils.join(parameters, '&');
 				String mailUri = mailProtocol + "://"
 						+ configProvider.getSmtpHost() + port + "?" + params;
@@ -104,14 +105,23 @@ public class SchedulerService {
 						// part 2: query execution
 						.bean(new QueryJobExecution(jobService, job), "execute")
 						// part 3: result transformation
-						.bean(new ResultTransformation(job), "transform")
+						.process(new MailOutputProcessor(job))
 						// part 4: mail result
 						.to(mailUri)
 						// log to see it
 						.to("log:" + id);
 			}
+
 		};
 		return builder;
+	}
+
+	protected String encode(String param) {
+		try {
+			return URLEncoder.encode(param, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	protected String getJobKey(QueryJob job) {

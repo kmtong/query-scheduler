@@ -16,6 +16,7 @@ connections: Map[String, String]
 	    @inputText(queryjobForm("cron"), '_label -> Messages("queryjobCron"))
 	    @textarea(queryjobForm("query"), '_label -> Messages("queryjobQuery"))
 	    @inputText(queryjobForm("recipients"), '_label -> Messages("queryjobRecipients"))
+	    @inputText(queryjobForm("mailSubject"), '_label -> Messages("queryjobMailSubject"))
 	    @inputText(queryjobForm("outputFormat"), '_label -> Messages("queryjobOutputFormat"))
 	    <input type="submit" class="btn btn-primary btn-sm" value="@Messages("submit")" />
 	}
