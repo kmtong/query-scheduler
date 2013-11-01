@@ -1,54 +1,39 @@
 package data;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.ResultSetMetaData;
+import java.util.LinkedList;
+import java.util.List;
 
 public class QueryResult {
 
-	final Connection conn;
-	final Statement statement;
-	final ResultSet result;
+	List<String> headers;
+	List<Row> data;
 
-	public QueryResult(Connection connection, Statement statement,
-			ResultSet result) {
-		this.conn = connection;
-		this.statement = statement;
-		this.result = result;
-	}
-
-	public Connection getConn() {
-		return conn;
-	}
-
-	public Statement getStatement() {
-		return statement;
-	}
-
-	public ResultSet getResult() {
-		return result;
-	}
-
-	public void close() {
-		try {
-			this.result.close();
-		} catch (SQLException e) {
+	public QueryResult(ResultSet result) throws Exception {
+		ResultSetMetaData meta = result.getMetaData();
+		headers = new LinkedList<String>();
+		data = new LinkedList<Row>();
+		int columns = meta.getColumnCount();
+		for (int i = 1; i <= columns; i++) {
+			headers.add(meta.getColumnLabel(i));
 		}
-		try {
-			this.statement.close();
-		} catch (SQLException e) {
-		}
-		try {
-			this.conn.close();
-		} catch (SQLException e) {
+
+		long rowId = 0L;
+		while (result.next()) {
+			Row row = new Row(rowId++);
+			for (int i = 1; i <= columns; i++) {
+				row.addColumnData(result.getObject(i));
+			}
+			data.add(row);
 		}
 	}
 
-	@Override
-	protected void finalize() throws Throwable {
-		this.close();
-		super.finalize();
+	public List<String> getHeaders() {
+		return headers;
 	}
 
+	public List<Row> getData() {
+		return data;
+	}
 }

@@ -1,6 +1,7 @@
 import inject.InjectorFactory;
 import play.Application;
 import play.GlobalSettings;
+import play.Logger;
 import services.SchedulerService;
 
 import com.google.inject.Injector;
@@ -17,7 +18,7 @@ public class Global extends GlobalSettings {
 		try {
 			injector.getInstance(SchedulerService.class).restoreStates();
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			Logger.error("Restoring QueryJob Error", e);
 		}
 	}
 
@@ -28,7 +29,7 @@ public class Global extends GlobalSettings {
 		try {
 			injector.getInstance(SchedulerService.class).clearStates();
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			Logger.error("Removing All QueryJob Error", e);
 		}
 	}
 

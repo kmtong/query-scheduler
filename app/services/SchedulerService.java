@@ -14,7 +14,6 @@ import org.apache.camel.Route;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang3.StringUtils;
 
-import play.Logger;
 import services.bean.MailOutputProcessor;
 import services.bean.QueryJobExecution;
 
@@ -51,12 +50,12 @@ public class SchedulerService {
 
 	public void clearJob(QueryJob job) throws Exception {
 		String id = getJobKey(job);
-		Logger.info("Clear Job: " + id);
 		camel.stopRoute(id);
 		camel.removeRoute(id);
 	}
 
 	public void setupJob(QueryJob job) throws Exception {
+		clearJob(job);
 		camel.addRoutes(createRouteBuilder(job));
 	}
 
@@ -68,6 +67,10 @@ public class SchedulerService {
 		RouteBuilder builder = new RouteBuilder() {
 			@Override
 			public void configure() throws Exception {
+
+				MailOutputProcessor mailoutProcess = new MailOutputProcessor(
+						job);
+
 				String id = getJobKey(job);
 				String fromUri = "quartz://QueryJob/" + job.getId() + "?cron="
 						+ encode(job.getCron());
@@ -95,6 +98,8 @@ public class SchedulerService {
 				// XXX comma-separated processing
 				// To recipients
 				parameters.add("to=" + encode(job.getRecipients()));
+				parameters
+						.add("contentType=" + mailoutProcess.getContentType());
 
 				String params = StringUtils.join(parameters, '&');
 				String mailUri = mailProtocol + "://"
@@ -105,7 +110,7 @@ public class SchedulerService {
 						// part 2: query execution
 						.bean(new QueryJobExecution(jobService, job), "execute")
 						// part 3: result transformation
-						.process(new MailOutputProcessor(job))
+						.process(mailoutProcess)
 						// part 4: mail result
 						.to(mailUri)
 						// log to see it

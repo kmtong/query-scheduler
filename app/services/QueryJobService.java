@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import models.QueryJob;
 import play.Logger;
+import services.bean.HtmlResultConverter;
 
 import com.avaje.ebean.Ebean;
 
@@ -35,22 +36,22 @@ public class QueryJobService {
 		Ebean.save(jobEntity);
 	}
 
-	public void test(Long jobId) throws Exception {
+	public String test(Long jobId) throws Exception {
 		Logger.info("Test Execution of Job: " + jobId);
 		QueryResult result = executeQuery(getQueryJobById(jobId));
-		ResultSet rs = result.getResult();
-		while (rs.next()) {
-			Logger.info("Column 1: " + rs.getObject(1));
-		}
-		result.close();
+		return new HtmlResultConverter().getResult(result);
 	}
 
 	// XXX add batching support for multiple results
 	public QueryResult executeQuery(QueryJob job) throws Exception {
 		Connection conn = connService.getConnection(job.getConnection());
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(job.getQuery());
-		return new QueryResult(conn, stmt, rs);
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(job.getQuery());
+			return new QueryResult(rs);
+		} finally {
+			conn.close();
+		}
 	}
 
 }

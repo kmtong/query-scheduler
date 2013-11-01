@@ -6,8 +6,11 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.quartz.CronExpression;
+
 import models.DBConnection;
 import models.QueryJob;
+import play.api.templates.Html;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -53,6 +56,14 @@ public class QueryJobController extends Controller {
 			return badRequest(edit.render(jobId, form, getConnectionOptions()));
 		}
 		forms.QueryJob jobform = form.get();
+
+		try {
+			new CronExpression(jobform.cron);
+		} catch (Exception e) {
+			form.reject("cron", e.getMessage());
+			return badRequest(edit.render(jobId, form, getConnectionOptions()));
+		}
+
 		QueryJob jobEntity = null;
 		if (jobId != null && jobId != 0) {
 			jobEntity = queryJobService.getQueryJobById(jobId);
@@ -66,8 +77,8 @@ public class QueryJobController extends Controller {
 
 	public Result test(Long jobId) {
 		try {
-			queryJobService.test(jobId);
-			return ok("OK");
+			String html = queryJobService.test(jobId);
+			return ok(Html.apply(html));
 		} catch (Exception e) {
 			return ok("Failed: " + e.getMessage());
 		}

@@ -1,12 +1,11 @@
 package services.bean;
 
-import javax.activation.DataHandler;
-import javax.mail.util.ByteArrayDataSource;
-
 import models.QueryJob;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+
+import data.QueryResult;
 
 public class MailOutputProcessor implements Processor {
 
@@ -18,10 +17,15 @@ public class MailOutputProcessor implements Processor {
 
 	@Override
 	public void process(Exchange xchg) throws Exception {
-		xchg.getIn().addAttachment(
-				"attachment.txt",
-				new DataHandler(new ByteArrayDataSource("Hello World"
-						.getBytes(), "text/plain")));
+		QueryResult result = (QueryResult) xchg.getIn().getBody();
+
+		// XXX hard-code to use HTML as output format
+		HtmlResultConverter converter = new HtmlResultConverter();
+		xchg.getIn().setBody(converter.getResult(result));
 	}
 
+	public String getContentType() {
+		// XXX hard-code to use HTML as output format
+		return "text/html";
+	}
 }

@@ -24,11 +24,10 @@ public class SchedulerUpdater extends UntypedActor {
 	public void onReceive(Object arg0) throws Exception {
 		QueryJobChange change = (QueryJobChange) arg0;
 		Logger.info("Received Message: " + arg0);
-		if (change.getChange() != Change.INSERT) {
-			schedulerService.clearJob(change.getJob());
-		}
 		if (change.getChange() != Change.DELETE) {
 			schedulerService.setupJob(change.getJob());
+		} else {
+			schedulerService.clearJob(change.getJob());
 		}
 	}
 
