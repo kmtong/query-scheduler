@@ -24,6 +24,7 @@ public class QueryJobFormAdapter implements Adapter<QueryJob, models.QueryJob> {
 		form.recipients = entity.getRecipients();
 		form.mailSubject = entity.getMailSubject();
 		form.outputFormat = entity.getOutputFormat();
+		form.template = entity.getTemplate();
 		return form;
 	}
 
@@ -41,6 +42,7 @@ public class QueryJobFormAdapter implements Adapter<QueryJob, models.QueryJob> {
 		entity.setQuery(form.query);
 		entity.setRecipients(form.recipients);
 		entity.setMailSubject(form.mailSubject);
+		entity.setTemplate(form.template);
 		entity.setConnection(findConnectionById(form.connectionId));
 		return entity;
 	}

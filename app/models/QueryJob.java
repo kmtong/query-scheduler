@@ -15,6 +15,7 @@ public class QueryJob {
 
 	String cron;
 	String mailSubject;
+	String template;
 	String recipients;
 
 	@ManyToOne
@@ -86,6 +87,14 @@ public class QueryJob {
 
 	public void setOutputFormat(String outputFormat) {
 		this.outputFormat = outputFormat;
+	}
+
+	public String getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(String template) {
+		this.template = template;
 	}
 
 }

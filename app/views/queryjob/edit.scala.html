@@ -17,7 +17,9 @@ connections: Map[String, String]
 	    @textarea(queryjobForm("query"), '_label -> Messages("queryjobQuery"))
 	    @inputText(queryjobForm("recipients"), '_label -> Messages("queryjobRecipients"))
 	    @inputText(queryjobForm("mailSubject"), '_label -> Messages("queryjobMailSubject"))
-	    @inputText(queryjobForm("outputFormat"), '_label -> Messages("queryjobOutputFormat"))
+	    @select(queryjobForm("outputFormat"), options=options("html"->"HTML", "excel"->"Excel"),
+	    	'_label -> Messages("queryjobOutputFormat"))
+	    @textarea(queryjobForm("template"), '_label -> Messages("queryTemplate"))
 	    <input type="submit" class="btn btn-primary btn-sm" value="@Messages("submit")" />
 	}
 

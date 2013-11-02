@@ -9,8 +9,10 @@ public class QueryResult {
 
 	List<String> headers;
 	List<Row> data;
+	String name;
 
-	public QueryResult(ResultSet result) throws Exception {
+	public QueryResult(String name, ResultSet result) throws Exception {
+		this.name = name;
 		ResultSetMetaData meta = result.getMetaData();
 		headers = new LinkedList<String>();
 		data = new LinkedList<Row>();
@@ -35,5 +37,9 @@ public class QueryResult {
 
 	public List<Row> getData() {
 		return data;
+	}
+
+	public String getName() {
+		return name;
 	}
 }

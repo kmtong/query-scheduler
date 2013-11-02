@@ -15,12 +15,14 @@ public class QueryJob {
 
 	@Required
 	public String mailSubject;
-	
+
 	@Required
 	public Long connectionId;
 
 	@Required
 	public String query;
+
+	public String template;
 
 	@Required
 	public String outputFormat;

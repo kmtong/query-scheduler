@@ -10,9 +10,12 @@ import javax.inject.Inject;
 import models.QueryJob;
 import play.Logger;
 import services.bean.HtmlResultConverter;
+import services.bean.IConverter;
 
 import com.avaje.ebean.Ebean;
 
+import data.OutputContext;
+import data.OutputResult;
 import data.QueryResult;
 
 public class QueryJobService {
@@ -38,8 +41,12 @@ public class QueryJobService {
 
 	public String test(Long jobId) throws Exception {
 		Logger.info("Test Execution of Job: " + jobId);
-		QueryResult result = executeQuery(getQueryJobById(jobId));
-		return new HtmlResultConverter().getResult(result);
+		QueryJob job = getQueryJobById(jobId);
+		QueryResult result = executeQuery(job);
+		OutputContext context = new OutputContext(null /* for testing */);
+		IConverter c = new HtmlResultConverter();
+		OutputResult r = c.extractResult(context, result);
+		return context.composeBody(r);
 	}
 
 	// XXX add batching support for multiple results
@@ -48,7 +55,7 @@ public class QueryJobService {
 		try {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(job.getQuery());
-			return new QueryResult(rs);
+			return new QueryResult(job.getName(), rs);
 		} finally {
 			conn.close();
 		}
