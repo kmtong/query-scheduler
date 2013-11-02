@@ -112,9 +112,7 @@ public class SchedulerService {
 						// part 3: result transformation
 						.process(mailoutProcess)
 						// part 4: mail result
-						.to(mailUri)
-						// log to see it
-						.to("log:" + id);
+						.to(mailUri);
 			}
 
 		};

@@ -97,7 +97,7 @@ public class OutputContext {
 		mustache.execute(writer, scopes);
 		writer.flush();
 
-		Logger.info("Mustache Output: " + writer.toString());
+		Logger.trace("Mustache Output: " + writer.toString());
 		return writer.toString();
 	}
 }
