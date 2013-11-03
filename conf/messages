@@ -27,5 +27,11 @@ queryjobQuery=SQL Query
 queryjobRecipients=Recipients
 queryjobMailSubject=Subject
 queryjobOutputFormat=Output Format
+queryTemplate=Email Template
 queryjobCreate=Create Query Job
-queryjobTest=Test Run
+queryjobTest=Preview
+
+dashboard=System Dashboard
+dashboardRunning=Running Jobs
+dashboardRouteID=Route ID
+dashboardNoRunningJobs=No Running Jobs

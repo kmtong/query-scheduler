@@ -7,6 +7,8 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import dashboard.ProcessTracker;
+
 public class InjectorFactory {
 
 	private static Injector INSTANCE;
@@ -24,6 +26,7 @@ public class InjectorFactory {
 			protected void configure() {
 				bind(CamelContext.class).to(DefaultCamelContext.class)
 						.asEagerSingleton();
+				bind(ProcessTracker.class).asEagerSingleton();
 			}
 		});
 	}

@@ -12,7 +12,7 @@
 		<tr>
 			<td><a href="@routes.ConnectionController.load(conn.getId())">@conn.getName()</a></td>
 			<td>@conn.getUrl()</td>
-			<td><a href="@routes.ConnectionController.test(conn.getId())">@Messages("connectionTest")</a>
+			<td><a href="@routes.ConnectionController.test(conn.getId())" target="_blank">@Messages("connectionTest")</a>
 		</tr>
 	}
 	</table>

@@ -1,0 +1,22 @@
+@(running: Map[String, org.apache.camel.Exchange])
+
+@main(Messages("dashboard")) {
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">@Messages("dashboardRunning")</h3>
+	</div>
+	<div class="panel-body">
+		@if(running.size() > 0) {
+		<ul class="list-group">
+		@for((route, xchg) <- running) {
+			<li class="list-group-item">@route</li>
+	    }
+		</ul>
+		} else {
+		@Messages("dashboardNoRunningJobs")
+		}
+	</div>
+</div>
+
+}

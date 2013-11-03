@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /                           @controllers.Application.index()
 
 GET		/driver						@controllers.DriverController.index()
 GET		/driver/:id					@controllers.DriverController.load(id: Long)

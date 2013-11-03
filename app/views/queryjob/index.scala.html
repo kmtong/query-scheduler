@@ -16,10 +16,11 @@
 			<td>@queryjob.getName()</td>
 			<td>@queryjob.getCron()</td>
 			<td>@queryjob.getRecipients()</td>
-			<td><a href="@routes.QueryJobController.test(queryjob.getId())">@Messages("queryjobTest")</a>
+			<td><a href="@routes.QueryJobController.test(queryjob.getId())" target="_blank">@Messages("queryjobTest")</a>
 		</tr>
 	}
 	</table>
 	
 	<a class="btn btn-default" href="@routes.QueryJobController.load(0)">@Messages("queryjobCreate")</a>
+	
 }
