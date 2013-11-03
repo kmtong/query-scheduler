@@ -22,4 +22,17 @@ public class JarByteClassLoader extends URLClassLoader {
 		this.addURL(cachedFile.toURI().toURL());
 	}
 
+	public void unload() {
+		if (cachedFile != null) {
+			cachedFile.delete();
+		}
+		cachedFile = null;
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		unload();
+		super.finalize();
+	}
+
 }

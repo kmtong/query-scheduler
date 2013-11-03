@@ -3,6 +3,8 @@ package inject;
 import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
 
+import services.JarByteClassLoaderCache;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -27,6 +29,7 @@ public class InjectorFactory {
 				bind(CamelContext.class).to(DefaultCamelContext.class)
 						.asEagerSingleton();
 				bind(ProcessTracker.class).asEagerSingleton();
+				bind(JarByteClassLoaderCache.class).asEagerSingleton();
 			}
 		});
 	}

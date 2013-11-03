@@ -1,21 +1,29 @@
 package services;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
-import com.avaje.ebean.Ebean;
+import javax.inject.Inject;
 
 import models.DBConnection;
+
+import com.avaje.ebean.Ebean;
 
 public class ConnectionService {
 
 	private static final String USER_PROP_NAME = "user";
 	private static final String PASSWORD_PROP_NAME = "password";
+
+	final DriverService driverService;
+
+	@Inject
+	public ConnectionService(DriverService driverService) {
+		this.driverService = driverService;
+	}
 
 	public List<DBConnection> findAll() {
 		return Ebean.find(DBConnection.class).findList();
@@ -30,19 +38,19 @@ public class ConnectionService {
 	}
 
 	public Connection getConnection(DBConnection conn) throws Exception {
-		return newConnection(conn.getDriver().getDriver(), conn.getDriver()
-				.getDriverClass(), conn.getUrl(), conn.getUsername(),
-				conn.getPassword());
+
+		ClassLoader driverLoader = driverService.getDriverClassLoader(conn
+				.getDriver());
+		return newConnection(driverLoader, conn.getDriver().getDriverClass(),
+				conn.getUrl(), conn.getUsername(), conn.getPassword());
 	}
 
-	@SuppressWarnings({ "resource", "rawtypes" })
-	protected Connection newConnection(byte[] driverContent,
+	@SuppressWarnings({ "rawtypes" })
+	protected Connection newConnection(ClassLoader loader,
 			String driverClassName, String jdbcurl, String username,
 			String password) throws IOException, ClassNotFoundException,
 			InstantiationException, IllegalAccessException, SQLException {
 
-		ClassLoader loader = new JarByteClassLoader(new URL[0], Thread
-				.currentThread().getContextClassLoader(), driverContent);
 		Class driverClass = loader.loadClass(driverClassName);
 		Driver sqlDriver = (Driver) driverClass.newInstance();
 		Properties p = new Properties();
