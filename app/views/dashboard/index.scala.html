@@ -1,4 +1,5 @@
-@(running: Map[String, org.apache.camel.Exchange])
+@(running: Map[String, org.apache.camel.Exchange],
+  runningJobs: Map[String, models.QueryJob])
 
 @main(Messages("dashboard")) {
 
@@ -12,7 +13,7 @@
 		@for((route, xchg) <- running) {
 			<li class="list-group-item">
 				<span class="glyphicon glyphicon-time"></span>
-				@route
+				<a href="@routes.QueryJobController.load(runningJobs(route).getId())">@runningJobs(route).getName()</a>
 				<span class="badge">@xchg.getIn().getHeader("timestamp")</span>
 			</li>
 	    }

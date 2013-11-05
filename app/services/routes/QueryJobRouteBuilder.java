@@ -11,6 +11,8 @@ import models.QueryJob;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.commons.lang3.StringUtils;
 
+import play.Logger;
+
 import services.PlayConfigurationProvider;
 import services.bean.MailOutputProcessor;
 import services.bean.QueryJobExecution;
@@ -36,6 +38,18 @@ public class QueryJobRouteBuilder extends RouteBuilder {
 
 	public static String getProcessEndpoint(QueryJob job) {
 		return "direct:QueryJob-" + job.getId();
+	}
+
+	public static long parseQueryJobID(String routeId) {
+		try {
+			String[] split = routeId.split("-");
+			if (split.length == 3) {
+				return Long.parseLong(split[1]);
+			}
+		} catch (NumberFormatException e) {
+			Logger.error("Parse error for RouteID -> JobID: " + routeId, e);
+		}
+		return -1;
 	}
 
 	public String getJobTriggerID() {
