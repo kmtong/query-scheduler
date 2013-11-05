@@ -10,7 +10,11 @@
 		@if(running.size() > 0) {
 		<ul class="list-group">
 		@for((route, xchg) <- running) {
-			<li class="list-group-item"><span class="glyphicon glyphicon-time"></span> @route</li>
+			<li class="list-group-item">
+				<span class="glyphicon glyphicon-time"></span>
+				@route
+				<span class="badge">@xchg.getIn().getHeader("timestamp")</span>
+			</li>
 	    }
 		</ul>
 		} else {

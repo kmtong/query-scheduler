@@ -2,6 +2,7 @@ package services.routes;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,8 +74,7 @@ public class QueryJobRouteBuilder extends RouteBuilder {
 					+ encode(configProvider.getSmtpPassword()));
 		}
 		if (configProvider.getFrom() != null) {
-			parameters.add("from="
-					+ encode(configProvider.getFrom()));
+			parameters.add("from=" + encode(configProvider.getFrom()));
 		}
 
 		// mail subject
@@ -99,6 +99,8 @@ public class QueryJobRouteBuilder extends RouteBuilder {
 				.end()
 				// begin execution
 				.to(TrackerRouteBuilder.getTrackerBeginEndpoint())
+				// timestamp logging
+				.setHeader("timestamp").method(this, "getTimestamp")
 				// execute
 				.bean(new QueryJobExecution(job), "execute")
 				// part 3: result transformation
@@ -107,6 +109,10 @@ public class QueryJobRouteBuilder extends RouteBuilder {
 				.to(mailUri)
 				// log history
 				.to(JobLogRouteBuilder.getJobLogEndpoint());
+	}
+
+	public Date getTimestamp() {
+		return new Date();
 	}
 
 	protected String encode(String param) {
