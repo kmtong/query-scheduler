@@ -7,6 +7,8 @@ import models.QueryJob;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Route;
 
+import play.Logger;
+
 import services.routes.JobLogRouteBuilder;
 import services.routes.QueryJobRouteBuilder;
 import services.routes.TrackerRouteBuilder;
@@ -58,9 +60,17 @@ public class SchedulerService {
 		String triggerId = QueryJobRouteBuilder.getJobTriggerID(job);
 		String processId = QueryJobRouteBuilder.getJobProcessID(job);
 
+		if (camel.getInflightRepository().size(triggerId) > 0) {
+			Logger.info("Inflight message going on for route: " + triggerId);
+			camel.getInflightRepository().removeRoute(triggerId);
+		}
 		camel.stopRoute(triggerId);
 		camel.removeRoute(triggerId);
 
+		if (camel.getInflightRepository().size(processId) > 0) {
+			Logger.info("Inflight message going on for route: " + processId);
+			camel.getInflightRepository().removeRoute(processId);
+		}
 		camel.stopRoute(processId);
 		camel.removeRoute(processId);
 	}
