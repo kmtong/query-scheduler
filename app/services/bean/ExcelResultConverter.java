@@ -60,7 +60,7 @@ public class ExcelResultConverter implements IConverter {
 			for (Object column : r.getData()) {
 				Cell cell = row.createCell(datacol++);
 				String styleName = "cell_normal";
-				cell.setCellValue(column.toString());
+				cell.setCellValue(column != null ? column.toString() : "");
 				cell.setCellStyle(styles.get(styleName));
 			}
 		}
@@ -69,7 +69,8 @@ public class ExcelResultConverter implements IConverter {
 
 		// auto content sizing (need Java2D)
 		col = 0;
-		for (String header : result.getHeaders()) {
+		for (@SuppressWarnings("unused")
+		String header : result.getHeaders()) {
 			sheet.autoSizeColumn(col++);
 		}
 

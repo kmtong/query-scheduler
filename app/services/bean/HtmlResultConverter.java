@@ -48,8 +48,8 @@ public class HtmlResultConverter implements IConverter {
 			sb.append("<tr>");
 			for (Object column : row.getData()) {
 				sb.append("<td>"
-						+ StringEscapeUtils.escapeHtml4(column.toString())
-						+ "</td>");
+						+ StringEscapeUtils.escapeHtml4(column != null ? column
+								.toString() : "") + "</td>");
 			}
 			sb.append("</tr>");
 		}
