@@ -31,4 +31,8 @@ public class PlayConfigurationProvider {
 		return config.getString("smtp.password");
 	}
 
+	public String getFrom() {
+		return config.getString("smtp.from");
+	}
+
 }

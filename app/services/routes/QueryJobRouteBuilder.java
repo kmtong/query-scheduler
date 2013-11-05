@@ -72,6 +72,10 @@ public class QueryJobRouteBuilder extends RouteBuilder {
 			parameters.add("password="
 					+ encode(configProvider.getSmtpPassword()));
 		}
+		if (configProvider.getFrom() != null) {
+			parameters.add("from="
+					+ encode(configProvider.getFrom()));
+		}
 
 		// mail subject
 		parameters.add("subject=" + encode(job.getMailSubject()));

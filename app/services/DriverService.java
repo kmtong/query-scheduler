@@ -37,13 +37,18 @@ public class DriverService {
 		return loaderCache.getOrElse(getKey(driver),
 				new Callable<JarByteClassLoader>() {
 					public JarByteClassLoader call() throws Exception {
-						JarByteClassLoader loader = new JarByteClassLoader(
-								new URL[0], Thread.currentThread()
-										.getContextClassLoader(), driver
-										.getDriver());
+						JarByteClassLoader loader = newClassLoader(driver
+								.getDriver());
 						return loader;
 					}
 				});
+	}
+
+	protected JarByteClassLoader newClassLoader(byte[] jarFileContent)
+			throws Exception {
+		JarByteClassLoader loader = new JarByteClassLoader(new URL[0], Thread
+				.currentThread().getContextClassLoader(), jarFileContent);
+		return loader;
 	}
 
 	protected String getKey(DBDriver conn) {
