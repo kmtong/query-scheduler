@@ -104,10 +104,10 @@ public class QueryJobRouteBuilder extends RouteBuilder {
 				+ port + "?" + params;
 
 		// part 1: scheduling
-		from(fromUri).id(getJobTriggerID()).to(getProcessEndpoint());
+		from(fromUri).routeId(getJobTriggerID()).to(getProcessEndpoint());
 
 		// part 2: query execution
-		from(getProcessEndpoint()).id(getJobProcessID())
+		from(getProcessEndpoint()).routeId(getJobProcessID())
 				// completion hook registration
 				.onCompletion().to(TrackerRouteBuilder.getTrackerEndEndpoint())
 				.end()

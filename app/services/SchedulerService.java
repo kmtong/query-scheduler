@@ -8,7 +8,6 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.Route;
 
 import play.Logger;
-
 import services.routes.JobLogRouteBuilder;
 import services.routes.QueryJobRouteBuilder;
 import services.routes.TrackerRouteBuilder;
@@ -37,7 +36,6 @@ public class SchedulerService {
 	}
 
 	public void restoreStates() throws Exception {
-		clearStates();
 		setupBasicRoutes();
 
 		// query all active jobs and build camel routes
