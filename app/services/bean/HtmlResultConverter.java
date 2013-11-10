@@ -54,7 +54,7 @@ public class HtmlResultConverter implements IConverter {
 			sb.append("</tr>");
 		}
 		sb.append("</table>");
-		return new OutputResult("result", "text/html",
+		return new OutputResult(result, "text/html",
 				getInputStream(sb.toString()), false);
 	}
 

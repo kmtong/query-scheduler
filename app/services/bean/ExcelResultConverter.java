@@ -75,7 +75,7 @@ public class ExcelResultConverter implements IConverter {
 		}
 
 		return new OutputResult(
-				result.getName(),
+				result,
 				"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 				getInputStream(wb), true);
 	}

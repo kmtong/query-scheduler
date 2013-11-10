@@ -4,21 +4,21 @@ import java.io.InputStream;
 
 public class OutputResult {
 
-	final String name;
 	final String contentType;
 	final InputStream content;
 	final boolean attachment;
+	final QueryResult result;
 
-	public OutputResult(String name, String contentType, InputStream content,
-			boolean attachment) {
-		this.name = name;
+	public OutputResult(QueryResult result, String contentType,
+			InputStream content, boolean attachment) {
+		this.result = result;
 		this.contentType = contentType;
 		this.content = content;
 		this.attachment = attachment;
 	}
 
 	public String getName() {
-		return name;
+		return result.getName();
 	}
 
 	public String getContentType() {
@@ -31,6 +31,10 @@ public class OutputResult {
 
 	public boolean isAttachment() {
 		return attachment;
+	}
+
+	public QueryResult getResult() {
+		return result;
 	}
 
 }

@@ -42,7 +42,13 @@ queryjobCronDesc=The sub-expression are separated with white-space, and represen
 	</ol>\
 	An example "0 0 12 ? * WED" means "every Wednesday at 12:00:00 pm".
 
-queryjobTemplateDesc='Default is {{{header}}}{{{body}}}'
+queryjobTemplateDesc='We use Mustache to render email contents.  Possible variables are:\
+	<ul>\
+	<li>header (HTML/CSS styles)</li>\
+	<li>body (HTML table results)</li>\
+	<li>count (No. of Records)</li>\
+	</ul>\
+	Default is {{{header}}}{{{body}}}'
 
 
 dashboard=System Dashboard

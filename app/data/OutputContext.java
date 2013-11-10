@@ -93,6 +93,8 @@ public class OutputContext {
 			scopes.put("body", os.toString("UTF-8"));
 		}
 
+		scopes.put("count", output.getResult().getData().size());
+
 		StringWriter writer = new StringWriter();
 		mustache.execute(writer, scopes);
 		writer.flush();
