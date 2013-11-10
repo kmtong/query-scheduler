@@ -30,6 +30,7 @@ queryjobOutputFormat=Output Format
 queryjobTemplate=Email Template
 queryjobCreate=Create Query Job
 queryjobTest=Preview
+queryjobInvokeNow=Invoke
 queryjobCronDesc=The sub-expression are separated with white-space, and represent:\
 	<ol>\
 	<li>Seconds</li>\

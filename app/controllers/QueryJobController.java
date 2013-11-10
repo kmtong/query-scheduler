@@ -84,6 +84,11 @@ public class QueryJobController extends Controller {
 		}
 	}
 
+	public Result invokeNow(Long jobId) {
+		queryJobService.invokeNow(jobId);
+		return redirect(routes.QueryJobController.index());
+	}
+
 	protected Map<String, String> getConnectionOptions() {
 		Map<String, String> options = new LinkedHashMap<String, String>();
 		List<DBConnection> conns = connService.findAll();

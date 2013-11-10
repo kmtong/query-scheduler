@@ -16,7 +16,10 @@
 			<td>@queryjob.getConnection().getName()</td>
 			<td>@queryjob.getCron()</td>
 			<td>@queryjob.getRecipients()</td>
-			<td><a href="@routes.QueryJobController.test(queryjob.getId())" target="_blank">@Messages("queryjobTest")</a>
+			<td>
+				<a class="btn btn-default btn-xs" href="@routes.QueryJobController.test(queryjob.getId())" target="_blank">@Messages("queryjobTest")</a>
+				<a class="btn btn-default btn-xs" href="@routes.QueryJobController.invokeNow(queryjob.getId())">@Messages("queryjobInvokeNow")</a>
+			</td>
 		</tr>
 	}
 	</table>

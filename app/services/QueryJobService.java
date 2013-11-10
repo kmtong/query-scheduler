@@ -8,9 +8,13 @@ import java.util.List;
 import javax.inject.Inject;
 
 import models.QueryJob;
+
+import org.apache.camel.CamelContext;
+
 import play.Logger;
 import services.bean.HtmlResultConverter;
 import services.bean.IConverter;
+import services.routes.QueryJobRouteBuilder;
 
 import com.avaje.ebean.Ebean;
 
@@ -21,10 +25,12 @@ import data.QueryResult;
 public class QueryJobService {
 
 	final ConnectionService connService;
+	final CamelContext camel;
 
 	@Inject
-	public QueryJobService(ConnectionService connService) {
+	public QueryJobService(ConnectionService connService, CamelContext camel) {
 		this.connService = connService;
+		this.camel = camel;
 	}
 
 	public List<QueryJob> findAll() {
@@ -61,4 +67,10 @@ public class QueryJobService {
 		}
 	}
 
+	public void invokeNow(Long jobId) {
+		Logger.info("Invoke Job Now: " + jobId);
+		QueryJob job = getQueryJobById(jobId);
+		camel.createProducerTemplate().sendBody(
+				QueryJobRouteBuilder.getProcessEndpoint(job), null);
+	}
 }
