@@ -27,9 +27,23 @@ queryjobQuery=SQL Query
 queryjobRecipients=Recipients
 queryjobMailSubject=Subject
 queryjobOutputFormat=Output Format
-queryTemplate=Email Template
+queryjobTemplate=Email Template
 queryjobCreate=Create Query Job
 queryjobTest=Preview
+queryjobCronDesc=The sub-expression are separated with white-space, and represent:\
+	<ol>\
+	<li>Seconds</li>\
+	<li>Minutes</li>\
+	<li>Hours</li>\
+	<li>Day-of-Month</li>\
+	<li>Month</li>\
+	<li>Day-of-Week</li>\
+	<li>Year (optional field)</li>\
+	</ol>\
+	An example "0 0 12 ? * WED" means "every Wednesday at 12:00:00 pm".
+
+queryjobTemplateDesc='Default is {{{header}}}{{{body}}}'
+
 
 dashboard=System Dashboard
 dashboardRunning=Running Jobs

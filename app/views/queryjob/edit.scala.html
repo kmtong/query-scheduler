@@ -13,13 +13,15 @@ connections: Map[String, String]
 	    @if(id != null){<input type="hidden" value="@id" />}
 	    @inputText(queryjobForm("name"), '_label -> Messages("queryjobName"))
 	    @select(queryjobForm("connectionId"), options=options(connections), '_label -> Messages("queryjobConnection"))
-	    @inputText(queryjobForm("cron"), '_label -> Messages("queryjobCron"))
+	    @inputText(queryjobForm("cron"), '_label -> Messages("queryjobCron"),
+			'_helpText -> Messages("queryjobCronDesc"))
 	    @textarea(queryjobForm("query"), '_label -> Messages("queryjobQuery"))
 	    @inputText(queryjobForm("recipients"), '_label -> Messages("queryjobRecipients"))
 	    @inputText(queryjobForm("mailSubject"), '_label -> Messages("queryjobMailSubject"))
 	    @select(queryjobForm("outputFormat"), options=options("html"->"HTML", "excel"->"Excel"),
 	    	'_label -> Messages("queryjobOutputFormat"))
-	    @textarea(queryjobForm("template"), '_label -> Messages("queryTemplate"))
+	    @textarea(queryjobForm("template"), '_label -> Messages("queryjobTemplate"),
+	    	'_helpText -> Messages("queryjobTemplateDesc"))
 	    <input type="submit" class="btn btn-primary btn-sm" value="@Messages("submit")" />
 	}
 

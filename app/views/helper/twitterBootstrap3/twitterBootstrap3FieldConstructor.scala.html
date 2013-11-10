@@ -7,6 +7,12 @@
    } else {
            @Html(elements.input.toString().replaceFirst("(<\\w+ )", "$1class=\"form-control\" "))
    }
+           @if(elements.args.contains('_helpText)) {
+           <span class="pull-right helptext glyphicon glyphicon-info-sign"
+           		data-toggle="tooltip" data-html="true" data-placement="right"
+           		data-container="body"
+           		title="" data-original-title="@elements.args.get('_helpText)"></span>
+           }
            <span class="help-block text-muted">@elements.infos.mkString(", ")</span>
    @if(elements.hasErrors) {
            <span class="help-block">@elements.errors.mkString(", ")</span>
