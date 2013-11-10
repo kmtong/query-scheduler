@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import models.QueryJob;
 
 import org.apache.camel.CamelContext;
-import org.apache.camel.Route;
 
 import play.Logger;
 import services.routes.JobLogRouteBuilder;
@@ -46,10 +45,6 @@ public class SchedulerService {
 	}
 
 	public void clearStates() throws Exception {
-		for (Route r : camel.getRoutes()) {
-			camel.stopRoute(r.getId());
-			camel.removeRoute(r.getId());
-		}
 		camel.stop();
 	}
 
